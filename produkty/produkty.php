@@ -12,8 +12,9 @@
         public $zdjecie;
         public $kategoria;
         public $ocena;
+        public $deskrypcja;
 
-        function __construct($nazwa, $cena, $id, $ilosc, $zdjecie, $kategoria, $ocena) {
+        function __construct($nazwa, $cena, $id, $ilosc, $zdjecie, $kategoria, $ocena, $deskrypcja) {
             $this->nazwa = $nazwa;
             $this->cena = $cena;
             $this->id = $id;
@@ -21,6 +22,7 @@
             $this->zdjecie = $zdjecie;
             $this->kategoria = $kategoria;
             $this->ocena = $ocena;
+            $this->deskrypcja = $deskrypcja;
         }
     }
 
@@ -34,13 +36,13 @@
 
         if ($wynoc) {
             while ($ocena = mysqli_fetch_row($wynoc)) {
-                array_push($moj_koszyk, new Koszyk($row[1], $row[2], $row[0], $row[3], $row[4], $row[5], $ocena[0]));
+                array_push($moj_koszyk, new Koszyk($row[1], $row[2], $row[0], $row[3], $row[4], $row[5], $ocena[0], $row[6]));
             }
         } 
 
         if (!$wynoc) {
             while ($ocena = mysqli_fetch_row($wynoc)) {
-                array_push($moj_koszyk, new Koszyk($row[1], $row[2], $row[0], $row[3], $row[4], $row[5], null));
+                array_push($moj_koszyk, new Koszyk($row[1], $row[2], $row[0], $row[3], $row[4], $row[5], null, $row[6]));
             }
         }
     }
