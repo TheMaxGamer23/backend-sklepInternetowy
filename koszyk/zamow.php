@@ -27,8 +27,13 @@
     $kwerenda = "SELECT koszyk.produkt_id, koszyk.ilosc, produkty.cena FROM koszyk JOIN produkty ON koszyk.produkt_id = produkty.id JOIN uzytkownicy ON koszyk.uzytkownik_id = uzytkownicy.id WHERE koszyk.uzytkownik_id = '$uzytkownik_id'";
     $wynik = mysqli_query($conn, $kwerenda);
     while ($row = mysqli_fetch_row($wynik)) {
+        if ($row[1] == 0) {
+            continue;
+        }
         $query = "INSERT INTO zamowienia(produkt_id, kod_zamowienia, ilosc, cena, uzytkownik_id) VALUES('$row[0]', '$kod_zamowienia', '$row[1]', '$row[2]', '$uzytkownik_id')";
         $stmt = mysqli_query($conn, $query);
+        $kwerilo = "UPDATE produkty SET ilosc = ilosc - '$row[1]' WHERE id = '$row[0]'";
+        $wynilo = mysqli_query($conn, $kwerilo);
     }
     $kwerusun = "DELETE FROM koszyk WHERE uzytkownik_id = '$uzytkownik_id'";
     $wynusun = mysqli_query($conn, $kwerusun);
