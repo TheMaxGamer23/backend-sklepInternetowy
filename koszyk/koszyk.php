@@ -37,11 +37,14 @@
         $uzytkownik_id = $row[0];
     }
 
-    $kwerenda1 = "SELECT koszyk.id, koszyk.produkt_id, koszyk.ilosc, produkty.nazwa, produkty.cena, produkty.zdjecie FROM koszyk JOIN produkty ON koszyk.produkt_id = produkty.id WHERE koszyk.uzytkownik_id = '$uzytkownik_id'";
+    $kwerenda1 = "SELECT koszyk.id, koszyk.produkt_id, koszyk.ilosc, produkty.nazwa, produkty.cena, produkty.zdjecie, produkty.ilosc FROM koszyk JOIN produkty ON koszyk.produkt_id = produkty.id WHERE koszyk.uzytkownik_id = '$uzytkownik_id'";
     $wynik1 = mysqli_query($conn, $kwerenda1);
     $moj_koszyk = [];
 
     while ($row = mysqli_fetch_row($wynik1)) {
+        if ($row[6] == 0) {
+            continue;
+        }
         array_push($moj_koszyk, new Koszyk($row[3], $row[4], $row[0], $row[1], $row[2], $row[5]));
     }
 
